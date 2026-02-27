@@ -1,0 +1,22 @@
+<h2>Add New User</h2>
+
+<form action="/users/save" method="POST">
+
+    <label>Name</label>
+    <input type="text" name="name" placeholder="Enter name" required />
+
+    <label>Email</label>
+    <input type="email" name="email" placeholder="Enter email" required />
+
+    <label>Phone Number</label>
+    <input type="number" name="phoneNumber" placeholder="Enter phone number" required />
+
+    <label>Password</label>
+    <input type="password" name="password" placeholder="Enter password" required />
+
+    <button type="submit">Create User</button>
+
+</form>
+
+<br>
+<a href="/users">⬅ Back to Users</a>

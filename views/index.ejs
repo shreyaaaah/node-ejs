@@ -1,0 +1,43 @@
+<h1>Admin Dashboard</h1>
+
+<!-- USERS -->
+<h2>Users</h2>
+<a href="/users/add">Add User</a>
+
+<ol>
+  <% users.forEach(user => { %>
+    <li>
+      <%= user.name %> -
+      <%= user.email %> -
+      <%= user.phoneNumber %>
+
+      <a href="/users/<%= user._id %>/edit">Edit</a>
+
+      <form action="/users/<%= user._id %>/delete" method="POST" style="display:inline;">
+        <button type="submit">Delete</button>
+      </form>
+    </li>
+  <% }) %>
+</ol>
+
+<hr>
+
+<!-- PRODUCTS -->
+<h2>Products</h2>
+<a href="/products/add">Add Product</a>
+
+<ol>
+  <% products.forEach(product => { %>
+    <li>
+      <%= product.name %> -
+      <%= product.description %> -
+      ₹ <%= product.price %>
+
+      <a href="/products/<%= product._id %>/edit">Edit</a>
+
+      <form action="/products/<%= product._id %>/delete" method="POST" style="display:inline;">
+        <button type="submit">Delete</button>
+      </form>
+    </li>
+  <% }) %>
+</ol>
