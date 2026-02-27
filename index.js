@@ -3,18 +3,20 @@ import mongoose from "mongoose";
 import expressLayouts from "express-ejs-layouts";
 import dbconnect from "./config/db.js";
 import dotenv from "dotenv";
+
 dotenv.config();
 
 const app = express();
-app.use(expressLayouts)
-app.set("layout","layout")
+
+app.use(expressLayouts);
+app.set("layout","layout");
 app.set("view engine", "ejs");
-app.use(express.static("public"))
+
+app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// const dbConnect = async () => {
-//   await mongoose.connect(process.env.MONGO_URI);
-// };
+
+
 const startServer = async () => {
   await dbconnect();
   app.listen(8080, () => console.log("Server started"));
