@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 dotenv.config();
 const app = express();
 
-// Middleware & Config
+// Middleware
 app.use(expressLayouts);
 app.set("layout", "layout");
 app.set("view engine", "ejs");
@@ -29,15 +29,19 @@ const userSchema = mongoose.Schema({
   password: { type: String, required: true }
 });
 
-// 2. Models (Defined before routes)
+// 2. Models (Must be defined BEFORE routes)
 const productModel = mongoose.model("products", productSchema);
 const userModel = mongoose.model("users", userSchema);
 
 // 3. Routes
 app.get("/", async (req, res) => {
-  const products = await productModel.find();
-  const users = await userModel.find();
-  res.render("index", { products, users });
+  try {
+    const products = await productModel.find();
+    const users = await userModel.find();
+    res.render("index", { products, users });
+  } catch (err) {
+    res.status(500).send("Error fetching data");
+  }
 });
 
 // Product Routes
@@ -78,19 +82,16 @@ app.post("/users/:id/delete", async (req, res) => {
   res.redirect("/");
 });
 
-// 4. Server Start
-const dbConnect = async () => {
+// 4. Server Initialization
+const startServer = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
-    console.log("DB Connected");
+    console.log("Database connected successfully");
+    const PORT = process.env.PORT || 8083;
+    app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
   } catch (err) {
-    console.error("DB Connection Error:", err);
+    console.error("Connection failed:", err);
   }
-};
-
-const startServer = async () => {
-  await dbConnect();
-  app.listen(8083, () => console.log("Server started on http://localhost:8083"));
 };
 
 startServer();
